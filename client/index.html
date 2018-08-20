@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
+    crossorigin="anonymous">
+  <link href="css/shop-homepage.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Uber Fox</a>
+
+      <ul class="nav navbar-nav pull-sm-right">
+        <li class="nav-item">
+          <a href="#" class="nav-link" data-toggle="modal" data-target="#loginModal">Login
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div id="index">
+    <div class="container">
+      <div class="my-4">
+        <div class="success-alert">
+          <div class="alert alert-success">
+            Login success
+          </div>
+        </div>
+        <div class="error-alert" style="display: none;">
+          <div class="alert alert-danger">
+            Error message
+          </div>
+        </div>
+      </div>
+
+      <div class="new-item">
+        <h2>Create new Item</h2>
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input v-model="input_name" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="price">Price:</label>
+          <input v-model="input_price" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="stock">Stock:</label>
+          <input v-model="input_stock" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="tags">Tags:</label>
+          <input v-model="input_tags" type="text" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary" @click="addItem">Submit</button>
+        <hr>
+      </div>
+
+      <div class="search-item">
+        <h2>Search Item</h2>
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input v-model="input_name" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="price">Start Price:</label>
+          <input v-model="input_price" type="text" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="tags">Tags:</label>
+          <input v-model="input_tags" type="text" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary" @click="searchItem">Search</button>
+        <hr>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="row my-4">
+            <div class="col-lg-4 col-md-6 mb-4">
+              <div class="card h-100">
+                <a href="#">
+                  <img class="card-img-top" src="http://placehold.it/700x400" alt="">
+                </a>
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <a href="#">Item One</a>
+                  </h4>
+                  <h5>$24.99</h5>
+                  <p class="card-text">Stock: 20pcs</p>
+                </div>
+                <div class="card-footer">
+                  <span class="badge badge-primary tag">
+                    Kitchen
+                  </span>
+                  <span class="badge badge-primary tag">
+                    Electric
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+              <div class="card h-100">
+                <a href="#">
+                  <img class="card-img-top" src="http://placehold.it/700x400" alt="">
+                </a>
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <a href="#">Item Two</a>
+                  </h4>
+                  <h5>$24.99</h5>
+                  <p class="card-text">Stock: 20pcs</p>
+                </div>
+                <div class="card-footer">
+                  <span class="badge badge-primary tag">
+                    Kitchen
+                  </span>
+                  <span class="badge badge-primary tag">
+                    Juicer
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+              <div class="card h-100">
+                <a href="#">
+                  <img class="card-img-top" src="http://placehold.it/700x400" alt="">
+                </a>
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <a href="#">Item Three</a>
+                  </h4>
+                  <h5>$24.99</h5>
+                  <p class="card-text">Stock: 20pcs</p>
+                </div>
+                <div class="card-footer">
+                  <span class="badge badge-primary tag">
+                    Cook
+                  </span>
+                  <span class="badge badge-primary tag">
+                    Healthy
+                  </span>
+                  <span class="badge badge-primary tag">
+                    Fruits
+                  </span>
+                  <span class="badge badge-primary tag">
+                    Electric
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+              <div class="card h-100">
+                <a href="#">
+                  <img class="card-img-top" src="http://placehold.it/700x400" alt="">
+                </a>
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <a href="#">Item Four</a>
+                  </h4>
+                  <h5>$24.99</h5>
+                  <p class="card-text">Stock: 20pcs</p>
+                </div>
+                <div class="card-footer">
+                  <span class="badge badge-primary tag">
+                    Kitchen
+                  </span>
+                  <span class="badge badge-primary tag">
+                    Electric
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+              <div class="card h-100">
+                <a href="#">
+                  <img class="card-img-top" src="http://placehold.it/700x400" alt="">
+                </a>
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <a href="#">Item Five</a>
+                  </h4>
+                  <h5>$24.99</h5>
+                  <p class="card-text">Stock: 20pcs</p>
+                </div>
+                <div class="card-footer">
+                  <span class="badge badge-primary tag">
+                    Kitchen
+                  </span>
+                  <span class="badge badge-primary tag">
+                    Electric
+                  </span>
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+          <!-- /.row -->
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+    <!-- loginModal -->
+    <div class="modal fade" id="loginModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="/action_page.php">
+              <div class="form-group">
+                <label for="email">Username:</label>
+                <input type="email" class="form-control" id="email">
+              </div>
+              <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="pwd">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.registerModal -->
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+    crossorigin="anonymous"></script>
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        item: [{
+          id: 1,
+          name: 'Item One',
+          price: 24.99,
+          stock: 20,
+          tags: ["Kitchen", "Electric"]
+        }, {
+          id: 2,
+          name: 'Item One',
+          price: 24.99,
+          stock: 20,
+          tags: ["Kitchen", "Juicer"]
+        }, {
+          id: 3,
+          name: 'Item One',
+          price: 24.99,
+          stock: 20,
+          tags: ["Cook", "Healthy", "Fruits", "Electric"]
+        }, {
+          id: 4,
+          name: 'Item One',
+          price: 24.99,
+          stock: 20,
+          tags: ["Kitchen", "Electric"]
+        }, {
+          id: 5,
+          name: 'Item One',
+          price: 24.99,
+          stock: 20,
+          tags: ["Kitchen", "Electric"]
+        }]
+      }
+    })
+  </script>
+  <script src="./vuejs/login-add.js"></script>
+
+</body>
+
+</html>
